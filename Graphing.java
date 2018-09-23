@@ -2,6 +2,7 @@
 import java.awt.*;
 import java.util.*;
 import javax.swing.JFrame;
+import java.io.*;
 
 class GBar {
 	String text;
@@ -36,7 +37,18 @@ public class GraphBeginnings extends JFrame {
 		return maxValue;
 	}
 	
-	public void pain (Graphics g) {
+	int getMaxBarWidth(ArrayList<GBar> garr) {
+		int maxValue = 0; 
+		for (int i = 0; i < garr.size(); i++) {
+			int value = garr.get(i).value;
+			if (value > maxValue) {
+				maxValue = value;
+			}
+		}
+		return maxValue;
+	}
+	
+	public void paint (Graphics g) {
 		super.paint(g);
 		Dimension dimen = getSize();
 		Insets insets = getInsets();
@@ -48,6 +60,33 @@ public class GraphBeginnings extends JFrame {
 		FontMetrics fm = getFontMetrics(font);
 		int fontHeight = fm.getHeight();
 		int maxAscent = fm.getMaxAscent();
+		
+		int strMaxWidth = left + getMaxTextWidth(gbarArr, fm);
+		int x_bar_start = strMaxWidth + 1;
+		
+		int barMaxValue = getMaxBarWidth(gbarArr);
+		double scale = (dimen.width - x_bar_start - right) / (double) barMaxValue;
+		
+		int y_start = top;
+		int bar_height = fontHeight; 
+		
+		for (int i = 0; i < gbarArr.size(); i++) {
+			String text = gbarArr.get(i).text;
+			int strWidth = fm.stringWidth(text);
+			int value = gbarArr.get(i).value;
+			int scaledValue = (int) (value * scale);
+			g.drawString(text, strMaxWidth - strWidth, y_start + maxAscent);
+			g.fillRect(x_bar_start, y_start, scaledValue, bar_height);
+			
+			y_start += fontHeight + 10;
+		}
+		
+		g.drawLine(strMaxWidth, top, strMaxWidth, dimen.height);
+	}
+	
+	public static void main (String [] args) {
+		ArrayList<GBar> garr = new ArrayList<GBar>();
+		
 	}
 	
 }

@@ -84,9 +84,13 @@ public class GraphBeginnings extends JFrame {
 		g.drawLine(strMaxWidth, top, strMaxWidth, dimen.height);
 	}
 	
+	
 	public static void main (String [] args) {
 		ArrayList<GBar> garr = new ArrayList<GBar>();
+	
 		
-	}
+		}
+		
+	
 	
 }

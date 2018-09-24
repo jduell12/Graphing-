@@ -1,5 +1,4 @@
 
-
 import java.awt.*;
 import java.util.*;
 import javax.swing.JFrame;
@@ -19,8 +18,8 @@ public class GraphBeginnings extends JFrame {
 
 	ArrayList<GBar> gbarArr = new ArrayList<GBar>();
 
-	GraphBeginnings(ArrayList<GBar> garr) {
-		super("Fantasy Football");
+	GraphBeginnings(ArrayList<GBar> garr, String title) {
+		super(title);
 
 		gbarArr = garr;
 		setSize(600, 600);
@@ -86,27 +85,47 @@ public class GraphBeginnings extends JFrame {
 		g.drawLine(strMaxWidth, top, strMaxWidth, dimen.height);
 	}
 
+	public String getTitle(String fileName) {
+		String title = "";
+		try {
+			File fi = new File(fileName);
+			Scanner scan = new Scanner(fi);
+			title = scan.nextLine();
+			scan.close();
+		} catch (FileNotFoundException e) {
+			System.out.println(e);
+		}
+		return title;
+	}
 
 	public static void main(String[] args) {
 		String title = "";
+		String name = "";
+		int num = 0;
+		String line = "";
+
 		ArrayList<GBar> garr = new ArrayList<GBar>();
 
-		for (int i = 0; i < args.length; i++) {
-			File fi = new File(args[i]);
-			try {
-				Scanner scan = new Scanner(fi);
-				title = scan.nextLine();
-				scan.useDelimiter(";");
-				if (scan.hasNext()) {
-					
-				}
-				
-			} catch (FileNotFoundException e) {
-				System.out.println(e);
+		try {
+			File fi = new File(args[0]);
+			Scanner scan = new Scanner(fi);
+			scan.nextLine();
+			if (scan.hasNextLine()) {
+
+				line = scan.nextLine();
+				StringTokenizer reader = new StringTokenizer(line, ";");
+				name = reader.nextToken();
+				num = Integer.parseInt(reader.nextToken().toString().trim());
+				garr.add(new GBar (name, num));
+			} else {
+				scan.close();
 			}
-		
+		} catch (FileNotFoundException e) {
+			System.out.println(e);
 		}
-		GraphBeginnings gb = new GraphBeginnings(garr);
+
+		GraphBeginnings gb = new GraphBeginnings(garr, title);
+		title = gb.getTitle(args[0]);
 		gb.setTitle(title);
 
 	}

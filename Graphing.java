@@ -27,7 +27,7 @@ public class GraphBeginnings extends JFrame {
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
-
+	
 	int getMaxTextWidth(ArrayList<GBar> garr, FontMetrics fm) {
 		int maxValue = 0;
 		for (int i = 0; i < garr.size(); i++) {
@@ -51,12 +51,13 @@ public class GraphBeginnings extends JFrame {
 	}
 
 	public void paint(Graphics g) {
+		int border = 10; 
 		super.paint(g);
 		Dimension dimen = getSize();
 		Insets insets = getInsets();
-		int top = insets.top;
-		int left = insets.left;
-		int right = insets.right;
+		int top = insets.top + border;
+		int left = insets.left + border;
+		int right = insets.right + border;
 
 		Font font = g.getFont();
 		FontMetrics fm = getFontMetrics(font);
@@ -84,6 +85,9 @@ public class GraphBeginnings extends JFrame {
 		}
 
 		g.drawLine(strMaxWidth, top, strMaxWidth, dimen.height);
+	
+		
+		
 	}
 
 	public String getTitle(String fileName) {
@@ -119,7 +123,6 @@ public class GraphBeginnings extends JFrame {
 				num = Integer.parseInt(reader.nextToken().toString().trim());
 				garr.add(new GBar (name, num));
 			}  
-			
 			if (!scan.hasNext()){
 				scan.close();
 				System.out.println("scan has closed");

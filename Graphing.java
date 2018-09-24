@@ -1,4 +1,5 @@
 
+
 import java.awt.*;
 import java.util.*;
 import javax.swing.JFrame;
@@ -110,16 +111,20 @@ public class GraphBeginnings extends JFrame {
 			File fi = new File(args[0]);
 			Scanner scan = new Scanner(fi);
 			scan.nextLine();
-			if (scan.hasNextLine()) {
-
+			
+			while (scan.hasNext()) {
 				line = scan.nextLine();
 				StringTokenizer reader = new StringTokenizer(line, ";");
 				name = reader.nextToken();
 				num = Integer.parseInt(reader.nextToken().toString().trim());
 				garr.add(new GBar (name, num));
-			} else {
+			}  
+			
+			if (!scan.hasNext()){
 				scan.close();
+				System.out.println("scan has closed");
 			}
+			
 		} catch (FileNotFoundException e) {
 			System.out.println(e);
 		}

@@ -79,14 +79,16 @@ public class GraphBeginnings extends JFrame {
 			int value = gbarArr.get(i).value;
 			int scaledValue = (int) (value * scale);
 			g.drawString(text, strMaxWidth - strWidth, y_start + maxAscent);
+			g.setColor(Color.green);
 			g.fillRect(x_bar_start, y_start, scaledValue, bar_height);
+			g.setColor(Color.BLACK);
 
 			y_start += fontHeight + 10;
 		}
-
+	g.setColor(Color.GREEN);
 		g.drawLine(strMaxWidth, top, strMaxWidth, dimen.height);
+		g.setColor(Color.BLACK);
 	
-		
 		
 	}
 
@@ -125,7 +127,6 @@ public class GraphBeginnings extends JFrame {
 			}  
 			if (!scan.hasNext()){
 				scan.close();
-				System.out.println("scan has closed");
 			}
 			
 		} catch (FileNotFoundException e) {

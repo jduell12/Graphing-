@@ -1,4 +1,5 @@
 
+
 import java.awt.*;
 import java.util.*;
 
@@ -95,7 +96,7 @@ public class GraphBeginnings extends JFrame {
 		Stroke stroke1 = new BasicStroke(6f);
 		g.setColor(Color.RED);
 		((Graphics2D) g).setStroke(stroke1);
-		g.drawRect(0, insets.top, ((dimen.width) - 3), (dimen.height) - 25);
+		g.drawRect(3, insets.top +3, ((dimen.width) -6), (dimen.height) - 28);
 	
 		
 		

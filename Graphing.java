@@ -2,13 +2,10 @@
 
 import java.awt.*;
 import java.util.*;
-
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-import javax.swing.border.Border;
-
 import java.io.*;
 
+//creates the bars in the bar graph with an appropriate label. Text is the label for the bar and the value is how far the bar will appear on the graph 
 class GBar {
 	String text;
 	int value;
@@ -21,8 +18,10 @@ class GBar {
 
 public class GraphBeginnings extends JFrame {
 
+	// an arrayList that holds the bars and labels that were created with GBar class
 	ArrayList<GBar> gbarArr = new ArrayList<GBar>();
 
+	// creates a graph based on the bars and labels in the arrayList
 	GraphBeginnings(ArrayList<GBar> garr, String title) {
 		super(title);
 
@@ -31,7 +30,8 @@ public class GraphBeginnings extends JFrame {
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
-	
+
+	// gets the max width of the longest text in the arrayList
 	int getMaxTextWidth(ArrayList<GBar> garr, FontMetrics fm) {
 		int maxValue = 0;
 		for (int i = 0; i < garr.size(); i++) {
@@ -43,6 +43,7 @@ public class GraphBeginnings extends JFrame {
 		return maxValue;
 	}
 
+	// gets the largest value from the arrayList bars
 	int getMaxBarWidth(ArrayList<GBar> garr) {
 		int maxValue = 0;
 		for (int i = 0; i < garr.size(); i++) {
@@ -54,8 +55,9 @@ public class GraphBeginnings extends JFrame {
 		return maxValue;
 	}
 
+	// creates the bar graph
 	public void paint(Graphics g) {
-		int border = 10; 
+		int border = 10;
 		super.paint(g);
 		Dimension dimen = getSize();
 		Insets insets = getInsets();
@@ -89,19 +91,21 @@ public class GraphBeginnings extends JFrame {
 
 			y_start += fontHeight + 10;
 		}
-	g.setColor(Color.GREEN);
+		// changes color on the bars to green
+		g.setColor(Color.GREEN);
 		g.drawLine(strMaxWidth, top, strMaxWidth, dimen.height);
+		// changes color back to black so text is written in black
 		g.setColor(Color.BLACK);
-	
-		Stroke stroke1 = new BasicStroke(6f);
+
+		// creates a red border around the graph
+		Stroke stroke1 = new BasicStroke(10);
 		g.setColor(Color.RED);
 		((Graphics2D) g).setStroke(stroke1);
-		g.drawRect(3, insets.top +3, ((dimen.width) -6), (dimen.height) - 28);
-	
-		
-		
+		g.drawRect(3, insets.top + 3, ((dimen.width) - 6), (dimen.height) - 28);
+
 	}
 
+	// Gets the title from the first line in the file 
 	public String getTitle(String fileName) {
 		String title = "";
 		try {
@@ -123,27 +127,32 @@ public class GraphBeginnings extends JFrame {
 
 		ArrayList<GBar> garr = new ArrayList<GBar>();
 
+		// gets the file that was inputed as an argument to use to crete the graph
 		try {
 			File fi = new File(args[0]);
 			Scanner scan = new Scanner(fi);
-			scan.nextLine();
 			
+			// skips first line since that is used as the title 
+			scan.nextLine();
+
+			// as long as the file has more input it grabs the text and number value and creates a new bar with the text and number value and adds it to the arrayList
 			while (scan.hasNext()) {
 				line = scan.nextLine();
 				StringTokenizer reader = new StringTokenizer(line, ";");
 				name = reader.nextToken();
 				num = Integer.parseInt(reader.nextToken().toString().trim());
-				garr.add(new GBar (name, num));
-			}  
-			if (!scan.hasNext()){
+				garr.add(new GBar(name, num));
+			}
+			if (!scan.hasNext()) {
 				scan.close();
 			}
-			
+
 		} catch (FileNotFoundException e) {
 			System.out.println(e);
 		}
 
 		GraphBeginnings gb = new GraphBeginnings(garr, title);
+		// gets the title from the first line in the file and sets the title to that line
 		title = gb.getTitle(args[0]);
 		gb.setTitle(title);
 
